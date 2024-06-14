@@ -1,0 +1,55 @@
+   // 获取当前行的学生信息
+        function getCurrentRowData(obj) {
+            var currentRow = obj.closest('tr');
+            var rowData = {
+                name: currentRow.querySelector('td[data-field="name"]').textContent,
+                g1: parseFloat(currentRow.querySelector('td[data-field="g1"]').textContent),
+                g2: parseFloat(currentRow.querySelector('td[data-field="g2"]').textContent),
+                g3: parseFloat(currentRow.querySelector('td[data-field="g3"]').textContent),
+                g4: parseFloat(currentRow.querySelector('td[data-field="g4"]').textContent),
+                g5: parseFloat(currentRow.querySelector('td[data-field="g5"]').textContent),
+                g6: parseFloat(currentRow.querySelector('td[data-field="g6"]').textContent)
+            };
+            return rowData;
+        }
+ 
+        //职业规划
+        // 职业规划按钮点击事件
+window.careerPlan=function (obj) {
+    // 获取当前行的数据
+    var currentRowData = getCurrentRowData(obj);
+ 
+    // 向后端发送请求，获取职业规划结果
+    $.ajax({
+        type: 'POST',
+        url: '/careerPlan',
+        data: JSON.stringify({ g6: currentRowData.g6 }),
+        contentType: 'application/json',
+        success: function (response) {
+            if (response.success) {
+                // 显示职业规划结果
+                showCareerPlanDialog(response.message);
+            } else {
+                console.error('获取职业规划结果失败');
+            }
+        },
+        error: function (error) {
+            console.error('获取职业规划结果时发生错误:', error);
+        }
+    });
+}
+ 
+// 显示职业规划结果的对话框
+function showCareerPlanDialog(message) {
+    layer.open({
+        title: '职业规划结果',
+        content: message,
+        btn: ['确定'],
+        yes: function (index, layero) {
+            // 点击确定按钮的回调，可以根据需要添加其他操作
+            layer.close(index);
+        }
+    });
+}
+ 
+    });
