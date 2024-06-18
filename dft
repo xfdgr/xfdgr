@@ -1,0 +1,37 @@
+from enum import Enum  
+from pygame.mixer import Sound  
+from dissipate.sound import *  
+  
+  
+# 声音枚举类，用于管理和播放游戏中的各种声音  
+class Sounds(Enum):  
+    GAME_BGM = os.path.join(sound_basic, 'GameSceneBGM.ogg')  # 游戏场景背景音乐  
+    WORLD_BGM = os.path.join(sound_basic, 'WorldSceneBGM.ogg')  # 世界场景背景音乐  
+    ELIMINATE_FORMAT = os.path.join(sound_eliminate, '%d.ogg')  # 消除音效格式  
+    SCORE_LEVEL = (  
+        os.path.join(sound_basic, 'good.ogg'),  # 分数等级 "好"  
+        os.path.join(sound_basic, 'great.ogg'),  # 分数等级 "很好"  
+        os.path.join(sound_basic, 'amazing.ogg'),  # 分数等级 "惊人"  
+        os.path.join(sound_basic, 'excellent.ogg'),  # 分数等级 "优秀"  
+        os.path.join(sound_basic, 'unbelievable.ogg')  # 分数等级 "难以置信"  
+    )  
+    CLICK = os.path.join(sound_basic, 'click.bubble.ogg')  # 点击气泡音效  
+    BOARD_SOUND = os.path.join(sound_basic, 'board.ogg')  # 板子音效  
+    CLICK_BUTTON = os.path.join(sound_basic, 'click_common_button.ogg')  # 点击按钮音效  
+    MONEY = os.path.join(sound_basic, 'money.ogg')  # 金钱音效  
+    ICE_BREAKING = os.path.join(sound_basic, 'ice_break.ogg')  # 冰块破碎音效  
+  
+    @staticmethod  
+    def eliminate(idx):  
+        """播放指定索引的消除音效"""  
+        Sound(Sounds.ELIMINATE_FORMAT.value % idx).play()  
+  
+    @staticmethod  
+    def score_level(idx):  
+        """播放指定索引的分数等级音效"""  
+        Sound(Sounds.SCORE_LEVEL.value[idx]).play()  
+  
+  
+def play_sound(sound: Enum):  
+    """播放指定声音，循环次数为1（即不循环）"""  
+    Sound(sound.value).play()
