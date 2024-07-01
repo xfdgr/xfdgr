@@ -1,0 +1,11 @@
+contours, hierarchy = cv2.findContours(image, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+for item in contours:
+    rect = cv2.boundingRect(item)
+    x = rect[0]
+    y = rect[1]
+    weight = rect[2]
+    height = rect[3]
+    # 根据轮廓的形状特点，确定车牌的轮廓位置并截取图像
+    if (weight > (height * 3)) and (weight < (height * 4.5)):
+        image = origin_image[y:y + height, x:x + weight]
+        plt_show(image)
