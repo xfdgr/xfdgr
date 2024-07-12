@@ -1,0 +1,30 @@
+interface AbstractProductA {
+    void use();
+}
+
+interface AbstractProductB {
+    void use();
+}
+class ConcreteProductA1 implements AbstractProductA {
+    public void use() {
+        System.out.println("Using ConcreteProductA1");
+    }
+}
+
+class ConcreteProductA2 implements AbstractProductA {
+    public void use() {
+        System.out.println("Using ConcreteProductA2");
+    }
+}
+
+class ConcreteProductB1 implements AbstractProductB {
+    public void use() {
+        System.out.println("Using ConcreteProductB1");
+    }
+}
+
+class ConcreteProductB2 implements AbstractProductB {
+    public void use() {
+        System.out.println("Using ConcreteProductB2");
+    }
+}
