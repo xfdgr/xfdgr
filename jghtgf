@@ -1,0 +1,60 @@
+def predict_from_file(audio_file,
+                      hop_length=None,
+                      fmin=50.,
+                      fmax=MAX_FMAX,
+                      model='full',
+                      decoder=crepe.decode.viterbi,
+                      return_harmonicity=False,
+                      return_periodicity=False,
+                      batch_size=None,
+                      device='cpu',
+                      pad=True):
+    """Performs pitch estimation from file on disk
+
+    Arguments
+        audio_file (string)
+            The file to perform pitch tracking on
+        hop_length (int)
+            The hop_length in samples
+        fmin (float)
+            The minimum allowable frequency in Hz
+        fmax (float)
+            The maximum allowable frequency in Hz
+        model (string)
+            The model capacity. One of 'full' or 'tiny'.
+        decoder (function)
+            The decoder to use. See decode.py for decoders.
+        return_harmonicity (bool) [DEPRECATED]
+            Whether to also return the network confidence
+        return_periodicity (bool)
+            Whether to also return the network confidence
+        batch_size (int)
+            The number of frames per batch
+        device (string)
+            The device used to run inference
+        pad (bool)
+            Whether to zero-pad the audio
+
+    Returns
+        pitch (torch.tensor [shape=(1, 1 + int(time // hop_length))])
+        (Optional) periodicity (torch.tensor
+                                [shape=(1, 1 + int(time // hop_length))])
+    """
+    # Load audio
+    audio, sample_rate = crepe.load.audio(audio_file)
+
+    # Predict
+    return predict(audio,
+                   sample_rate,
+                   hop_length,
+                   fmin,
+                   fmax,
+                   model,
+                   decoder,
+                   return_harmonicity,
+                   return_periodicity,
+                   batch_size,
+                   device,
+                   pad)
+
+
